@@ -1,0 +1,69 @@
+input[type=text]
+{
+    width: 150px;
+}
+dt, dd
+{
+    margin-left: 10px;
+}
+
+.dbg
+{
+    display: none;
+}
+
+.score
+{
+    font-weight: bold;
+}
+.error
+{
+    font-weight: bold;
+    color: red;
+    margin: 0px;
+}
+.success
+{
+    font-weight: bold;
+    color: green;
+    margin: 0px;
+}
+
+.info-cards-container
+{
+    overflow: auto
+}
+.info-card
+{
+    float: left;
+    border: 1px Solid #E3E3E3;
+    width: 200px;
+    height: 200px;
+    margin: 5px;
+}
+.info-card.active
+{
+    border: 2px Solid red;
+}
+.info-card .header, .info-card .footer
+{
+    text-align: center;
+}
+
+.scorecard
+{
+    overflow: auto;
+}
+.scorecard dd
+{
+    float: right;
+    text-align: right;
+    width: 70px;
+    max-width: 75px;
+    margin-right: 10px;
+    margin-left: 0px;
+}
+.scorecard dt {
+    float: left;
+    text-align: left;
+}

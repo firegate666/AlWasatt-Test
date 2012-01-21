@@ -1,0 +1,5 @@
+all:
+  stylesheets: [game]
+  metas:
+    title: Al Wasatt Interview Test
+    author: Waseem

@@ -1,0 +1,118 @@
+****************************
+* Al Wasatt Interview Test *
+****************************
+
+Introduction
+============
+
+This project contains two symfony modules, one for each test given, namely: Dice (test 1) and Game (test 2).
+Since I'm new to Symfony, it took me a little while to put together a decent working demo. 
+
+
+System Requirements
+===================
+
+- PHP v5.3
+- Nginx or Apache 
+- Symfony v1.4
+- PHP Session
+
+
+Web Server Setup
+================
+
+I've developed this project using Nginx (v1.0.11) web server. You may install Nginx on Ubuntu (debian) linux machine as:
+sudo apt-get install nginx
+
+Following configuration will help you run the code using Nginx web server.
+(file: /etc/nginx/nginx.conf)
+
+# start-of: al-wasatt symfony config
+server {
+    listen 80;
+    server_name local.dev.com;
+    root /home/waseem/projects/alwasatt/web;
+
+    # strip app.php/ prefix if it is present
+    # production: rewrite ^/app\.php/?(.*)$ /$1 permanent;
+    rewrite ^/frontend_dev\.php/?(.*)$ /$1 permanent;
+
+    location / {
+        # production: index app.php;
+        index frontend_dev.php;
+        try_files $uri @rewriteapp;
+    }
+
+    location @rewriteapp {
+        # production: rewrite ^(.*)$ /app.php/$1 last;
+        rewrite ^(.*)$ /frontend_dev.php/$1 last;
+    }
+
+    location ^~ /sf/ {
+        alias /home/waseem/projects/alwasatt/lib/vendor/symfony/data/web/sf/;
+    }
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    # production: location ~ ^/app\.php(/|$) {
+    location ~ ^/frontend_dev\.php(/|$) {
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+        fastcgi_param  HTTPS              off;
+    }
+}
+# end-of: al-wasatt test symfony config
+
+
+Assumptions
+===========
+
+Test 1 - Dice (url: /dice)
+--------------------------
+
+1, Number of turns must be an integer
+2, Familiarity of scoring algorithm
+
+
+Test 2 - Game (url: /game)
+--------------------------
+
+1, Non-empty player name is expected
+2, Unique player name help in identifying the player uniquely
+3, Familiarity of game work flow & scoring algorithm
+4, Game played in single PHP session (standard php.ini session setting assumed)
+
+
+Code Review Instructions
+========================
+
+Following are few principles I follow personally while writing any code. Familiarity to these might help you in understanding the code with ease.
+
+a, Object Oriented (OO)
+b, Don't Repeat Yourself (DRY)
+c, camelCasing
+d, Function is private unless needed beyond file / class scope
+e, Every function does a very specific job in a class.
+f, Business logic should be kept as close-by as possible, ideally in one function or a class (such as controller).
+g, Fluent code interface
+h, Using 'dl', 'dt', and 'dt' over 'ul' / 'li' or 'table' HTML tags for rendering forms
+
+
+Time sheet
+==========
+Hereunder is my time-sheet for the project:
+
+Total: 16 hrs
+Coding: ~ 4 hrs
+Learning, documentation, testing, and deployment: ~ 12 hrs
+
+
+REFERENCES
+==========
+
+- Learning Symfony
+  http://www.symfony-project.org/gentle-introduction/1_4/en/07-Inside-the-View-Layer
+
+- Basics to Git hosting
+  http://help.github.com/create-a-repo/
